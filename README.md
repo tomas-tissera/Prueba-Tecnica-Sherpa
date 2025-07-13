@@ -35,3 +35,6 @@ link consigna _¡: https://fluoridated-quart-409.notion.site/EL-GRAN-DESAF-O-DEL
 install :
     npm install -D playwright ts-node typescript
     npx playwright install
+    npm install pdf-parse
+    npm install playwright pdf-parse
+    npm install pdfjs-dist

@@ -6,8 +6,21 @@
     "test": "ts-node login.spec.ts"
   },
   "devDependencies": {
-    "playwright": "^1.44.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/pdf-parse": "^1.1.5",
+    "playwright": "^1.54.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.4.0"
-  }
+  },
+  "dependencies": {
+    "fs-extra": "^11.3.0",
+    "pdf": "^0.1.0",
+    "pdf-parse": "^1.1.1",
+    "pdfjs-dist": "^5.3.93"
+  },
+  "description": "Mensaje reclutador:\r     Agustín Tiseira 17:21\r         Holaa Buenas!",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
