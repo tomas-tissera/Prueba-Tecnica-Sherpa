@@ -1,0 +1,13 @@
+{
+  "name": "prueba-tecnica-sherpa",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "test": "ts-node login.spec.ts"
+  },
+  "devDependencies": {
+    "playwright": "^1.44.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.4.0"
+  }
+}
