@@ -760,6 +760,12 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
 
       const dataBufferMalleus = fs.readFileSync(malleusMaleficarumPdfPath);
       const pdfDataMalleus = await pdf(dataBufferMalleus);
+
+
+
+
+
+      
       const matchMalleus = pdfDataMalleus.text.match(/Cˆ‡digo(?: de acceso)?:\s*(\S+)/i); // Regex corregida
       if (matchMalleus) {
         // Almacenar el código del Malleus Maleficarum si es necesario para futuros pasos
