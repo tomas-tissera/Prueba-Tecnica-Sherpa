@@ -92,13 +92,13 @@ Al finalizar, el navegador se cerrará automáticamente.
 
 ## 📂 Estructura del Proyecto
 
-├── node_modules/ # Dependencias del proyecto
-├── login.spec.ts # Script principal de automatización
-├── package.json # Metadatos del proyecto y scripts
-├── package-lock.json # Bloqueo de dependencias
-├── tsconfig.json # Configuración de TypeScript
-├── README.md # Este archivo
-└── .gitignore # Archivos y directorios a ignorar por Git
+- `node_modules/` — Dependencias del proyecto  
+- `login.spec.ts` — Script principal de automatización  
+- `package.json` — Metadatos del proyecto y scripts  
+- `package-lock.json` — Bloqueo de dependencias  
+- `tsconfig.json` — Configuración de TypeScript  
+- `README.md` — Este archivo  
+- `.gitignore` — Archivos y directorios a ignorar por Git
 
 ## 🧪 Pruebas
 
