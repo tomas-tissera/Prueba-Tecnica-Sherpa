@@ -65,7 +65,7 @@ Sigue estos pasos para configurar y ejecutar el proyecto localmente:
 
 ```console
 git clone https://github.com/tomas-tissera/Prueba-Tecnica-Sherpa.git
-cd nombre-del-repositorio
+cd Prueba-Tecnica-Sherpa
 npm install
 ```
 
