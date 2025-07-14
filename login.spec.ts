@@ -761,21 +761,9 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
       const dataBufferMalleus = fs.readFileSync(malleusMaleficarumPdfPath);
       const pdfDataMalleus = await pdf(dataBufferMalleus);
 
-
-
-
-
+      console.log(pdfDataMalleus.text);
+      console.log('*-*-*-*-*-*-* FELICIDADES *-*-*-*-*-*-*');
       
-      const matchMalleus = pdfDataMalleus.text.match(/Cˆ‡digo(?: de acceso)?:\s*(\S+)/i); // Regex corregida
-      if (matchMalleus) {
-        // Almacenar el código del Malleus Maleficarum si es necesario para futuros pasos
-        // claves.push(matchMalleus[1]); // Descomentar si el código del PDF se necesita para futuros desafíos
-        console.log(`Código extraído del Malleus Maleficarum: ${matchMalleus[1]} (después del desafío final)`);
-      } else {
-        console.error('No se encontró ningún código en el PDF del Malleus Maleficarum (después del desafío final).');
-        throw new Error('Código no encontrado en el PDF del Malleus Maleficarum (después del desafío final).');
-      }
-
     } else {
       console.warn('No se pudo desbloquear el Malleus Maleficarum porque no se obtuvo una contraseña final válida.');
     }
