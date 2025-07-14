@@ -13,7 +13,7 @@ Este proyecto es un script de automatización diseñado para interactuar con una
 
 Los antiguos manuscritos han sido maldecidos por hechizos anti-humanos. Solo los bots y scripts podrán tocarlos sin ser convertidos en piedra. Tu misión es crear un web scraper que conquiste la cripta completa de forma automatizada. Puedes entrar a la página para inspeccionarla, no hay problema.
 
-Si en algún momento la niebla no te deja avanzar puedes pedir una luz a agus@sherpa.wtf.
+
 
 ---
 
@@ -64,7 +64,7 @@ Si en algún momento la niebla no te deja avanzar puedes pedir una luz a agus@sh
 Sigue estos pasos para configurar y ejecutar el proyecto localmente:
 
 ```console
-git clone https://github.com/tu-usuario/nombre-del-repositorio.git
+git clone https://github.com/tomas-tissera/Prueba-Tecnica-Sherpa.git
 cd nombre-del-repositorio
 npm install
 ```
@@ -127,6 +127,6 @@ Este proyecto está bajo la licencia MIT.
 
 ## ✉️ Contacto
 
-Tu Nombre - tu.email@example.com
+Tomas Tissera - tomas.tissera.trabajo@gmail.com
 
-Enlace al proyecto: [https://github.com/tu-usuario/nombre-del-repositorio](https://github.com/tu-usuario/nombre-del-repositorio)
+Enlace al proyecto: [https://github.com/tomas-tissera/Prueba-Tecnica-Sherpa.git](https://github.com/tomas-tissera/Prueba-Tecnica-Sherpa.git)
