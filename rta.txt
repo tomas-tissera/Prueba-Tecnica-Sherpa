@@ -1,0 +1,143 @@
+El Codigo devuelve:
+ 
+>>npm run test
+
+> prueba-tecnica-sherpa@1.0.0 test
+> ts-node login.spec.ts
+
+
+--- Procesando Codex Aureus de Echternach (Siglo XIV - Intento: 1/3) ---
+Descargando PDF del manuscrito: Codex Aureus de Echternach
+PDF del manuscrito 1 guardado en: ./Codex_Aureus_de_Echternach.pdf
+Warning: Indexing all PDF objects
+Código extraído del manuscrito 1: AUREUS1350
+
+--- Procesando Libro de Kells (Siglo XV - Intento: 1/3) ---
+Código AUREUS1350 ingresado para el manuscrito 2.
+Botón "Desbloquear" clickeado para el manuscrito 2.
+Descargando PDF del manuscrito: Libro de Kells
+PDF del manuscrito 2 guardado en: ./Libro_de_Kells.pdf
+Warning: Indexing all PDF objects
+Código extraído del manuscrito 2: KELLS1450
+
+--- Procesando Codex Seraphinianus (Siglo XVI - Intento: 1/3) ---
+Código KELLS1450 ingresado para el manuscrito 3.
+Botón "Desbloquear" clickeado para el manuscrito 3.
+Descargando PDF del manuscrito: Codex Seraphinianus
+PDF del manuscrito 3 guardado en: ./Codex_Seraphinianus.pdf
+Warning: Indexing all PDF objects
+Código extraído del manuscrito 3: SERAPH1520
+
+--- Navegando a la página 2 ---
+
+--- Procesando Necronomicon (Siglo XVII - Documentación - Intento: 1/3) ---
+
+--- Contenido del modal "Ver Documentación" del Necronomicon ---
+Desafío del Necronomicon
+🌟
+¡Felicitaciones, explorador de secretos ancestrales!
+
+Has descubierto el umbral de los misterios arcanos. Este manuscrito aguarda en las sombras, pero sus secretos no se revelan a través de métodos convencionales...
+
+🔮
+MENSAJE CIFRADO DEL CUSTODIO
+
+"Cuando las estrellas se alineen y el código del libro anterior resuene en el éter, el buscador astuto debe enviar una petición a los dominios sagrados... Los antiguos responderán con un desafío que solo los versados en el arte de la búsqueda binaria podrán resolver..."
+
+📡 Información de la API
+Método: GET
+Endpoint:
+https://backend-production-9d875.up.railway.app/api/cipher/challenge
+📋 Copiar
+Parámetros (query string):
+bookTitle: [Nombre del libro a desbloquear]
+unlockCode: [Código del libro anterior]
+⚡ Instrucciones del Ritual
+Los versados en las artes digitales sabrán cómo invocar los dominios sagrados
+Los antiguos responderán con un desafío algorítmico
+Solo la implementación correcta revelará los caracteres ocultos
+La contraseña verdadera será tuya para desbloquear este manuscrito
+💀
+
+Una vez que tengas la contraseña, podrás introducirla para desbloquear este manuscrito
+
+--- Resolviendo el Desafío Final ---
+Contraseña final obtenida para Necronomicon: VS675Q
+
+--- Desbloqueando Necronomicon con la contraseña final ---
+Contraseña final "VS675Q" ingresada para el Necronomicon.
+Botón "Desbloquear" clickeado para el Necronomicon con contraseña final.
+Manuscrito Necronomicon desbloqueado exitosamente con la contraseña final.
+Contraseña del desafío del Necronomicon añadida a las claves: VS675Q
+Modal del Necronomicon cerrado.
+Descargando PDF del manuscrito: Necronomicon (después del desafío final)
+PDF del Necronomicon guardado en: ./Necronomicon.pdf (después del desafío final)
+Warning: Indexing all PDF objects
+Código extraído del Necronomicon: NECRO1620 (después del desafío final)
+[ 'AUREUS1350', 'KELLS1450', 'SERAPH1520', 'VS675Q', 'NECRO1620' ]
+
+--- Procesando Malleus Maleficarum (Siglo XVIII - Documentación - Intento: 1/3) ---
+
+--- Contenido del modal "Ver Documentación" del Malleus Maleficarum ---
+Desafío del Malleus Maleficarum
+🔥
+¡El último guardián de la cripta te observa!
+
+Este manuscrito contiene los secretos finales, pero antes debes completar el ritual de descifrado del manuscrito anterior...
+
+🌙
+SUSURROS DEL ÚLTIMO GRIMORIO
+
+"Solo aquellos que han conquistado las sombras del manuscrito anterior y obtenido su código secreto podrán acceder a los misterios finales... El mismo ritual que antes, pero esta vez los guardianes esperan a los más dignos..."
+
+📡 Información de la API Final
+Método: GET
+Endpoint:
+https://backend-production-9d875.up.railway.app/api/cipher/challenge
+📋 Copiar
+Parámetros (query string):
+bookTitle: [Nombre del libro a desbloquear]
+unlockCode: [Código del libro anterior]
+⚔️ Desafío Final
+
+El desafío final aguarda a los dignos. Usa el código revelado por el manuscrito anterior para completar el ritual final del mismo modo que antes.
+
+🏺
+
+Una vez que tengas la contraseña del desafío, podrás introducirla para completar la colección
+
+--- Resolviendo el Desafío Final para Malleus Maleficarum ---
+Contraseña final obtenida para Malleus Maleficarum: 86RFQP
+
+--- Desbloqueando Malleus Maleficarum con la contraseña final ---
+Contraseña final "86RFQP" ingresada para el Malleus Maleficarum.
+Botón "Desbloquear" clickeado para el Malleus Maleficarum con contraseña final.
+Manuscrito Malleus Maleficarum desbloqueado exitosamente con la contraseña final.
+Modal del Malleus Maleficarum cerrado.
+Descargando PDF del manuscrito: Malleus Maleficarum (después del desafío final)
+PDF del Malleus Maleficarum guardado en: ./Malleus_Maleficarum.pdf (después del desafío final)
+Warning: Indexing all PDF objects
+
+
+ð  ́¡FELICITACIONES, MAESTRO DEL SCRAPING! ð
+
+ð Has conquistado exitosamente la cripta
+y obtenido todos los manuscritos sagrados.
+
+ðï‚ Tu dominio de las artes del web scraping
+ha sido demostrado con honor y destreza.
+
+âï‚ Algoritmos implementados â
+ðfi APIs dominadas â
+ð PDFs extraˆ›dos â
+ðfl Desafˆ›os resueltos â
+
+ð§ PRˆXIMO PASO:
+Envˆ›a tu soluciˆ‡n de scraping completa a:
+agus@sherpa.wtf
+
+ð›  ́¡El cofre del tesoro digital se ha abierto!
+Eres oficialmente un Automatizador Arcano.
+
+ð DESAFˆO COMPLETADO - NIVEL MAESTRO ð
+*-*-*-*-*-*-* FELICIDADES *-*-*-*-*-*-*
