@@ -552,39 +552,6 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
       console.log(`PDF del Necronomicon guardado en: ${necronomiconPdfPath} (después del desafío final)`);
       
       await delay(1000);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
       const fileIsReadyNecro = await waitForFileReady(necronomiconPdfPath);
       
       await delay(1000);
