@@ -67,7 +67,7 @@ Sigue estos pasos para configurar y ejecutar el proyecto localmente:
 git clone https://github.com/tu-usuario/nombre-del-repositorio.git
 cd nombre-del-repositorio
 npm install
-
+```
 ## 🔐 Configuración (Credenciales Místicas)
 
 > "Cuando el monje @sherpa.local despierte, y la cripta con su clave secreta se abra, 'cript@123' será el hechizo que liberará los pergaminos de su eterno letargo."
