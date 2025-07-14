@@ -84,6 +84,7 @@ Estas credenciales y el endpoint de la API (`https://backend-production-9d875.up
 Para ejecutar el script de automatización, abre tu terminal en la raíz del proyecto y ejecuta:
 ```bash
 npm run test
+```
 
 Este comando iniciará el navegador Firefox (en modo no headless para que puedas ver la automatización), realizará el proceso de login, navegará por los manuscritos en el orden temporal correcto (Siglo XIV, Siglo XV, Siglo XVI, Siglo XVII, Siglo XVIII), descargará y procesará los PDFs, resolverá los desafíos de la API y finalmente mostrará el contenido del último PDF (Malleus Maleficarum) en la consola.
 Al finalizar, el navegador se cerrará automáticamente.
