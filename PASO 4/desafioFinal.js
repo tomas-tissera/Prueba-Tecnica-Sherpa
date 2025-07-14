@@ -44,40 +44,37 @@ var binarySearch = function (vault, target) {
     while (low <= high) {
         var mid = Math.floor((low + high) / 2);
         var guess = vault[mid];
-        // Comprueba si el índice del elemento es el objetivo
         if (mid === target) {
             return guess;
         }
-        // Si el índice del medio es menor que el objetivo, busca en la mitad derecha
         if (mid < target) {
             low = mid + 1;
         }
-        // Si es mayor, busca en la mitad izquierda
         else {
             high = mid - 1;
         }
     }
-    return null; // Si no se encuentra el objetivo
+    return null;
 };
-// Se asume que el array 'claves' está definido y la última clave es la del desafío anterior
-var claves = ['SERAPH1520']; // Reemplaza 'TU_CLAVE_AQUI' con el código real que obtuviste.
-var unlockCode = claves[claves.length - 1];
-var bookTitle = 'Necronomicon';
-var endpoint = 'https://backend-production-9d875.up.railway.app/api/cipher/challenge';
-var finalChallenge = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var response, _a, vault, targets, finalPassword, _i, targets_1, target, char, error_1;
+// Nueva función principal que acepta los parámetros y devuelve la clave final
+var findFinalPassword = function (bookTitle, claves) { return __awaiter(void 0, void 0, void 0, function () {
+    var unlockCode, endpoint, response, _a, vault, targets, finalPassword, _i, targets_1, target, char, error_1;
     var _b;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
-                _c.trys.push([0, 2, , 3]);
+                unlockCode = claves[claves.length - 1];
+                endpoint = 'https://backend-production-9d875.up.railway.app/api/cipher/challenge';
+                _c.label = 1;
+            case 1:
+                _c.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, axios_1.default.get(endpoint, {
                         params: {
                             bookTitle: bookTitle,
                             unlockCode: unlockCode
                         }
                     })];
-            case 1:
+            case 2:
                 response = _c.sent();
                 _a = response.data.challenge, vault = _a.vault, targets = _a.targets;
                 finalPassword = '';
@@ -88,10 +85,8 @@ var finalChallenge = function () { return __awaiter(void 0, void 0, void 0, func
                         finalPassword += char;
                     }
                 }
-                console.log("¡Ritual completado!");
-                console.log("La contraseña final del manuscrito es:", finalPassword);
-                return [3 /*break*/, 3];
-            case 2:
+                return [2 /*return*/, finalPassword];
+            case 3:
                 error_1 = _c.sent();
                 if (axios_1.default.isAxiosError(error_1)) {
                     console.error("Error al completar el desafío:", ((_b = error_1.response) === null || _b === void 0 ? void 0 : _b.data) || error_1.message);
@@ -99,9 +94,20 @@ var finalChallenge = function () { return __awaiter(void 0, void 0, void 0, func
                 else {
                     console.error("Un error inesperado ocurrió:", error_1);
                 }
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [2 /*return*/, null];
+            case 4: return [2 /*return*/];
         }
     });
 }); };
-finalChallenge();
+// Ejemplo de cómo usar la nueva función
+var myClaves = ['NECRO1620']; // Reemplaza 'TU_CLAVE_AQUI' con la clave real.
+var myBookTitle = 'Malleus Maleficarum';
+findFinalPassword(myBookTitle, myClaves).then(function (password) {
+    if (password) {
+        console.log("¡Ritual completado!");
+        console.log("La contraseña final del manuscrito es:", password);
+    }
+    else {
+        console.log("No se pudo obtener la contraseña final.");
+    }
+});

@@ -163,7 +163,7 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
 
       const dataBuffer1 = fs.readFileSync(pdfPath1);
       const pdfData1 = await pdf(dataBuffer1);
-      const match1 = pdfData1.text.match(/Cˆ‡digo(?: de acceso)?:\s*(\S+)/i);
+      const match1 = pdfData1.text.match(/Cˆ‡digo(?: de acceso)?:\s*(\S+)/i); // Regex corregida
       if (match1) {
         codigoAcceso = match1[1];
         console.log(`Código extraído del manuscrito 1: ${codigoAcceso}`);
@@ -263,7 +263,7 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
 
         const dataBuffer2 = fs.readFileSync(pdfPath2);
         const pdfData2 = await pdf(dataBuffer2);
-        const match2 = pdfData2.text.match(/Cˆ‡digo(?: de acceso)?:\s*(\S+)/i);
+        const match2 = pdfData2.text.match(/Cˆ‡digo(?: de acceso)?:\s*(\S+)/i); // Regex corregida
         if (match2) {
           codigoAcceso = match2[1];
           console.log(`Código extraído del manuscrito 2: ${codigoAcceso}`);
@@ -366,7 +366,7 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
 
         const dataBuffer3 = fs.readFileSync(pdfPath3);
         const pdfData3 = await pdf(dataBuffer3);
-        const match3 = pdfData3.text.match(/Cˆ‡digo(?: de acceso)?:\s*(\S+)/i);
+        const match3 = pdfData3.text.match(/Cˆ‡digo(?: de acceso)?:\s*(\S+)/i); // Regex corregida
         if (match3) {
           codigoAcceso = match3[1];
           console.log(`Código extraído del manuscrito 3: ${codigoAcceso}`);
@@ -470,16 +470,16 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
 
   // --- DESAFÍO FINAL: Obtener la contraseña final y desbloquear el Necronomicon ---
   console.log('\n--- Resolviendo el Desafío Final ---');
-  let finalPassword: string | null = null;
+  let necronomiconChallengePassword: string | null = null; // Renamed for clarity
   try {
     // Se llama a findFinalPassword con el título del libro y las claves recolectadas
     // Filtramos las claves para asegurarnos de que no haya valores null antes de pasarlas
     const filteredClaves = claves.filter((clave): clave is string => clave !== null);
-    finalPassword = await findFinalPassword(necronomiconTitle, filteredClaves); 
-    console.log(`Contraseña final obtenida: ${finalPassword}`);
+    necronomiconChallengePassword = await findFinalPassword(necronomiconTitle, filteredClaves); 
+    console.log(`Contraseña final obtenida para Necronomicon: ${necronomiconChallengePassword}`);
 
     // --- INGRESAR Y DESBLOQUEAR EL NECRONOMICON CON LA CONTRASEÑA FINAL ---
-    if (finalPassword) {
+    if (necronomiconChallengePassword) {
       console.log(`\n--- Desbloqueando ${necronomiconTitle} con la contraseña final ---`);
       await necronomiconCardLocator.scrollIntoViewIfNeeded(); // Asegurarse de que esté visible
       await delay(1000);
@@ -487,8 +487,8 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
       const inputLocatorNecroFinal = necronomiconCardLocator.locator('input[type="text"]');
       const unlockButtonLocatorNecroFinal = necronomiconCardLocator.locator('button:has-text("Desbloquear")');
 
-      await inputLocatorNecroFinal.fill(finalPassword);
-      console.log(`Contraseña final "${finalPassword}" ingresada para el Necronomicon.`);
+      await inputLocatorNecroFinal.fill(necronomiconChallengePassword);
+      console.log(`Contraseña final "${necronomiconChallengePassword}" ingresada para el Necronomicon.`);
       await delay(1000);
 
       await unlockButtonLocatorNecroFinal.click();
@@ -500,11 +500,14 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
       const incorrectCodeMessageNecroFinal = page.locator('text="Código incorrecto"').first();
       const isCodeIncorrectNecroFinal = await incorrectCodeMessageNecroFinal.isVisible();
       if (isCodeIncorrectNecroFinal) {
-        console.error(`Error: La contraseña final "${finalPassword}" es incorrecta para el Necronomicon.`);
+        console.error(`Error: La contraseña final "${necronomiconChallengePassword}" es incorrecta para el Necronomicon.`);
         throw new Error('Contraseña final incorrecta para el Necronomicon.');
       }
       console.log(`Manuscrito ${necronomiconTitle} desbloqueado exitosamente con la contraseña final.`);
       
+      // Añadir la contraseña del desafío del Necronomicon a las claves para el siguiente manuscrito
+      claves.push(necronomiconChallengePassword); 
+      console.log(`Contraseña del desafío del Necronomicon añadida a las claves: ${necronomiconChallengePassword}`);
 
       // CERRAR EL MODAL
       const closeButtonModalNecro = page.locator('button[aria-label="Cerrar modal"]').first();
@@ -517,7 +520,6 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
       } else {
         console.warn('No se encontró el botón de cerrar el modal del Necronomicon. Continuando...');
       }
-
 
       // Opcional: Descargar el PDF después de un desbloqueo exitoso
       const downloadButtonLocatorNecro = necronomiconCardLocator.locator('button:has-text("Descargar PDF")');
@@ -535,30 +537,74 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
         downloadPromiseNecro.then((d: typeof Download) => ({ type: 'download', data: d })),
         errorDownloadMessageLocatorNecro.waitFor({ state: 'visible', timeout: 10000 }).then(() => ({ type: 'error_message' }))
       ]);
-
+      
+      await delay(1000);
       if (resultNecro.type === 'error_message') {
         console.error(`Mensaje de error en la web: "Error al descargar el archivo" para ${necronomiconTitle} (después del desafío final).`);
         throw new Error('Error al descargar el archivo desde la web (después del desafío final).');
       }
-
+      
+      await delay(1000);
       const downloadNecro = resultNecro.data;
 
+      await delay(1000);
       await downloadNecro.saveAs(necronomiconPdfPath);
       console.log(`PDF del Necronomicon guardado en: ${necronomiconPdfPath} (después del desafío final)`);
+      
+      await delay(1000);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
       const fileIsReadyNecro = await waitForFileReady(necronomiconPdfPath);
+      
+      await delay(1000);
       if (!fileIsReadyNecro) {
         throw new Error('El archivo PDF del Necronomicon no estuvo listo para ser leído a tiempo (después del desafío final).');
       }
 
       const dataBufferNecro = fs.readFileSync(necronomiconPdfPath);
+      
+      await delay(1000);
       const pdfDataNecro = await pdf(dataBufferNecro);
-      const matchNecro = pdfDataNecro.text.match(/Cˆ‡digo(?: de acceso)?:\s*(\S+)/i);
+      await delay(1000);
+      const matchNecro = pdfDataNecro.text.match(/Cˆ‡digo(?: de acceso)?:\s*(\S+)/i); // Regex corregida
+      await delay(1000);
       if (matchNecro) {
-        // Almacenar el código del Necronomicon si es necesario para futuros pasos
-        // necronomiconCode = matchNecro[1]; // Ya está declarado arriba
-        // claves.push(necronomiconCode); // Si se necesita para otros desafíos
+        // necronomiconCode = matchNecro[1]; // Este código no se usa para el siguiente desafío API, solo es informativo
         console.log(`Código extraído del Necronomicon: ${matchNecro[1]} (después del desafío final)`);
+        claves.push(matchNecro[1])
+        console.log(claves);
+        
       } else {
         console.error('No se encontró ningún código en el PDF del Necronomicon (después del desafío final).');
         throw new Error('Código no encontrado en el PDF del Necronomicon (después del desafío final).');
@@ -577,60 +623,162 @@ const findFinalPassword = async (bookTitle: string, claves: string[]): Promise<s
   }
   // Fin de la sección del desafío final y desbloqueo del Necronomicon
   
-  // --- QUINTO MANUSCRITO: Ver Documentación del Siglo XVIII ---
-  const siglo18Title = 'Manuscrito del Siglo XVIII'; // Asumiendo un título para el manuscrito del Siglo XVIII
-  
-  for (let retry18 = 0; retry18 < MAX_ACTION_RETRIES; retry18++) {
+  // --- QUINTO MANUSCRITO: Desafío del Malleus Maleficarum (Siglo XVIII) ---
+  const malleusMaleficarumTitle = 'Malleus Maleficarum'; // Título del manuscrito
+  const malleusMaleficarumPdfPath = `./${malleusMaleficarumTitle.replace(/ /g, '_')}.pdf`;
+  const malleusMaleficarumCardLocator = page.locator(`.bg-sherpa-surface\\/10:has-text("${malleusMaleficarumTitle}")`).first();
+
+  // Parte 1: Hacer clic en "Ver Documentación" para el Malleus Maleficarum, extraer y cerrar modal
+  for (let retryMalleusDoc = 0; retryMalleusDoc < MAX_ACTION_RETRIES; retryMalleusDoc++) {
     try {
-      console.log(`\n--- Procesando ${siglo18Title} (Siglo XVIII - Intento: ${retry18 + 1}/${MAX_ACTION_RETRIES}) ---`);
-      // Localizar la tarjeta del manuscrito del Siglo XVIII.
-      // Ajusta este selector si el texto exacto del manuscrito del Siglo XVIII es diferente.
-      const siglo18CardLocator = page.locator(`.bg-sherpa-surface\\/10:has-text("Siglo XVIII")`).first();
-      await siglo18CardLocator.scrollIntoViewIfNeeded();
+      console.log(`\n--- Procesando ${malleusMaleficarumTitle} (Siglo XVIII - Documentación - Intento: ${retryMalleusDoc + 1}/${MAX_ACTION_RETRIES}) ---`);
+      await malleusMaleficarumCardLocator.scrollIntoViewIfNeeded();
       await delay(1000);
 
-      // Hacer clic en "Ver Documentación" para el manuscrito del Siglo XVIII
-      const verDocumentacion18Button = siglo18CardLocator.locator('button:has-text("Ver Documentación")').first();
-      await verDocumentacion18Button.waitFor({ state: 'visible' });
+      // Hacer clic en "Ver Documentación" para el Malleus Maleficarum
+      const verDocumentacionMalleusButton = malleusMaleficarumCardLocator.locator('button:has-text("Ver Documentación")').first();
+      await verDocumentacionMalleusButton.waitFor({ state: 'visible' });
       await delay(1000);
-      await verDocumentacion18Button.click();
+      await verDocumentacionMalleusButton.click();
       await delay(1000); // Pausa después de hacer clic en Ver Documentación
 
-      const docModal18Locator = page.locator('div[role="dialog"]').first();
-      await docModal18Locator.waitFor({ state: 'visible' });
+      const docModalMalleusLocator = page.locator('div[role="dialog"]').first();
+      await docModalMalleusLocator.waitFor({ state: 'visible' });
       await delay(1000);
 
-      const docModal18Content = await docModal18Locator.innerText();
-      console.log('\n--- Contenido del modal "Ver Documentación" del Siglo XVIII ---');
-      console.log(docModal18Content);
+      const docModalMalleusContent = await docModalMalleusLocator.innerText();
+      console.log('\n--- Contenido del modal "Ver Documentación" del Malleus Maleficarum ---');
+      console.log(docModalMalleusContent);
       await delay(1000);
 
-      const closeDocModal18Button = docModal18Locator.locator('button[aria-label="Cerrar modal"]').first();
-      if (await closeDocModal18Button.isVisible()) {
-        await closeDocModal18Button.click();
+      const closeDocModalMalleusButton = docModalMalleusLocator.locator('button[aria-label="Cerrar modal"]').first();
+      if (await closeDocModalMalleusButton.isVisible()) {
+        await closeDocModalMalleusButton.click();
         await delay(1000);
-        await docModal18Locator.waitFor({ state: 'hidden' });
+        await docModalMalleusLocator.waitFor({ state: 'hidden' });
         await delay(1000);
       } else {
-        console.warn('No se encontró el botón de cerrar el modal de documentación del Siglo XVIII. Continuando...');
+        console.warn('No se encontró el botón de cerrar el modal de documentación del Malleus Maleficarum. Continuando...');
       }
       break; // Salir del bucle de reintento si tiene éxito
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error(`Error al procesar "Ver Documentación" del Siglo XVIII (Intento ${retry18 + 1}):`, error.message);
+        console.error(`Error al hacer clic en "Ver Documentación" del Malleus Maleficarum o procesar su modal (Intento ${retryMalleusDoc + 1}):`, error.message);
         const isRetryableError = error.message.includes('visible did not resolve') || error.message.includes('state: "hidden" did not resolve') || error.message.includes('No se encontró el botón de cerrar');
         
-        if (isRetryableError && retry18 < MAX_ACTION_RETRIES - 1) {
-          console.log('Reintentando acción para "Ver Documentación" del Siglo XVIII...');
+        if (isRetryableError && retryMalleusDoc < MAX_ACTION_RETRIES - 1) {
+          console.log('Reintentando acción para "Ver Documentación" del Malleus Maleficarum...');
           await delay(2000);
           continue;
         } else {
           break;
         }
       } else {
-        console.error(`Ocurrió un error desconocido al procesar "Ver Documentación" del Siglo XVIII:`, error);
+        console.error(`Ocurrió un error desconocido al procesar "Ver Documentación" del Malleus Maleficarum:`, error);
         break;
       }
+    }
+  }
+
+  // DESAFÍO FINAL para Malleus Maleficarum: Obtener la contraseña final y desbloquear
+  console.log('\n--- Resolviendo el Desafío Final para Malleus Maleficarum ---');
+  let malleusMaleficarumChallengePassword: string | null = null;
+  try {
+    const filteredClavesMalleus = claves.filter((clave): clave is string => clave !== null);
+    malleusMaleficarumChallengePassword = await findFinalPassword(malleusMaleficarumTitle, filteredClavesMalleus);
+    console.log(`Contraseña final obtenida para Malleus Maleficarum: ${malleusMaleficarumChallengePassword}`);
+
+    if (malleusMaleficarumChallengePassword) {
+      console.log(`\n--- Desbloqueando ${malleusMaleficarumTitle} con la contraseña final ---`);
+      await malleusMaleficarumCardLocator.scrollIntoViewIfNeeded();
+      await delay(1000);
+
+      const inputLocatorMalleusFinal = malleusMaleficarumCardLocator.locator('input[type="text"]');
+      const unlockButtonLocatorMalleusFinal = malleusMaleficarumCardLocator.locator('button:has-text("Desbloquear")');
+
+      await inputLocatorMalleusFinal.fill(malleusMaleficarumChallengePassword);
+      console.log(`Contraseña final "${malleusMaleficarumChallengePassword}" ingresada para el Malleus Maleficarum.`);
+      await delay(1000);
+
+      await unlockButtonLocatorMalleusFinal.click();
+      console.log('Botón "Desbloquear" clickeado para el Malleus Maleficarum con contraseña final.');
+      await delay(1000);
+      await page.waitForLoadState('networkidle');
+      await delay(1000);
+
+      const incorrectCodeMessageMalleusFinal = page.locator('text="Código incorrecto"').first();
+      const isCodeIncorrectMalleusFinal = await incorrectCodeMessageMalleusFinal.isVisible();
+      if (isCodeIncorrectMalleusFinal) {
+        console.error(`Error: La contraseña final "${malleusMaleficarumChallengePassword}" es incorrecta para el Malleus Maleficarum.`);
+        throw new Error('Contraseña final incorrecta para el Malleus Maleficarum.');
+      }
+      console.log(`Manuscrito ${malleusMaleficarumTitle} desbloqueado exitosamente con la contraseña final.`);
+
+      // CERRAR EL MODAL (si existe un modal de desafío para Malleus Maleficarum)
+      const closeButtonModalMalleus = page.locator('button[aria-label="Cerrar modal"]').first();
+      if (await closeButtonModalMalleus.isVisible()) {
+        await closeButtonModalMalleus.click();
+        console.log('Modal del Malleus Maleficarum cerrado.');
+        await delay(1000);
+        await closeButtonModalMalleus.waitFor({ state: 'hidden' });
+        await delay(1000);
+      } else {
+        console.warn('No se encontró el botón de cerrar el modal del Malleus Maleficarum. Continuando...');
+      }
+
+      // Opcional: Descargar el PDF después de un desbloqueo exitoso
+      const downloadButtonLocatorMalleus = malleusMaleficarumCardLocator.locator('button:has-text("Descargar PDF")');
+      await downloadButtonLocatorMalleus.waitFor({ state: 'visible' });
+      await delay(1000);
+
+      console.log(`Descargando PDF del manuscrito: ${malleusMaleficarumTitle} (después del desafío final)`);
+      const downloadPromiseMalleus = page.waitForEvent('download');
+      const errorDownloadMessageLocatorMalleus = page.locator('p.text-sm.text-red-400:has-text("Error al descargar el archivo")').first();
+
+      await downloadButtonLocatorMalleus.click();
+      await delay(1000);
+
+      const resultMalleus = await Promise.race([
+        downloadPromiseMalleus.then((d: typeof Download) => ({ type: 'download', data: d })),
+        errorDownloadMessageLocatorMalleus.waitFor({ state: 'visible', timeout: 10000 }).then(() => ({ type: 'error_message' }))
+      ]);
+
+      if (resultMalleus.type === 'error_message') {
+        console.error(`Mensaje de error en la web: "Error al descargar el archivo" para ${malleusMaleficarumTitle} (después del desafío final).`);
+        throw new Error('Error al descargar el archivo desde la web (después del desafío final).');
+      }
+
+      const downloadMalleus = resultMalleus.data;
+
+      await downloadMalleus.saveAs(malleusMaleficarumPdfPath);
+      console.log(`PDF del Malleus Maleficarum guardado en: ${malleusMaleficarumPdfPath} (después del desafío final)`);
+
+      const fileIsReadyMalleus = await waitForFileReady(malleusMaleficarumPdfPath);
+      if (!fileIsReadyMalleus) {
+        throw new Error('El archivo PDF del Malleus Maleficarum no estuvo listo para ser leído a tiempo (después del desafío final).');
+      }
+
+      const dataBufferMalleus = fs.readFileSync(malleusMaleficarumPdfPath);
+      const pdfDataMalleus = await pdf(dataBufferMalleus);
+      const matchMalleus = pdfDataMalleus.text.match(/Cˆ‡digo(?: de acceso)?:\s*(\S+)/i); // Regex corregida
+      if (matchMalleus) {
+        // Almacenar el código del Malleus Maleficarum si es necesario para futuros pasos
+        // claves.push(matchMalleus[1]); // Descomentar si el código del PDF se necesita para futuros desafíos
+        console.log(`Código extraído del Malleus Maleficarum: ${matchMalleus[1]} (después del desafío final)`);
+      } else {
+        console.error('No se encontró ningún código en el PDF del Malleus Maleficarum (después del desafío final).');
+        throw new Error('Código no encontrado en el PDF del Malleus Maleficarum (después del desafío final).');
+      }
+
+    } else {
+      console.warn('No se pudo desbloquear el Malleus Maleficarum porque no se obtuvo una contraseña final válida.');
+    }
+
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('Error al resolver el desafío final o desbloquear el Malleus Maleficarum:', error.message);
+    } else {
+      console.error('Ocurrió un error desconocido al resolver el desafío final o desbloquear el Malleus Maleficarum:', String(error));
     }
   }
 
