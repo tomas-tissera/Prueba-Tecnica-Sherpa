@@ -38,3 +38,4 @@ install :
     npm install pdf-parse
     npm install playwright pdf-parse
     npm install pdfjs-dist
+    npm install axios
